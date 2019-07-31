@@ -88,10 +88,25 @@ impl <T> Matrix<T> where T:Add<T,Output=T>+Sub<T,Output = T>+Clone +Copy{
 
     }
 
-//    //矩阵转置
-//    fn transpose(&self)->Matrix<T>{
-//
-//    }
+    fn size(&self)->(u32,u32){
+        (self.value.len() as u32,self.value[0].size())
+    }
+
+    //矩阵转置
+    fn transpose(&self)->Matrix<T>{
+        let (m,n) = self.size();
+        let mut list = Vec::new();
+        for i in 0..n{
+            let mut vec = Vec::new();
+            for j in 0..m{
+                vec.push(self.value[j as usize].value[i as usize])
+            }
+            list.push(Vector::new(vec));
+        }
+        Matrix{
+            value:list
+        }
+    }
 
 }
 fn main(){
@@ -105,5 +120,9 @@ fn main(){
     let v2 = Vector::new(vec![2,3,4,5,6]);
 
     println!("{}",mat);
+
+    println!("{:?}",mat.size());
+
+    println!("{}",mat.transpose());
 
 }
