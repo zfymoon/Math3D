@@ -48,25 +48,32 @@ impl <T> Sub<Vector<T>> for Vector<T> where T:Add<T,Output=T>+Sub<T,Output = T>+
         Vector::new(result)
     }
 }
-//矩阵
+//矩阵，行向量的组成方式
 #[derive(Debug)]
 struct Matrix <T> where T:Add<T,Output=T>+Sub<T,Output = T>+Clone +Copy{
     value:Vec<Vector<T>>
 }
 
-impl <T> Display for Matrix<T> where T:Add<T,Output=T>+Sub<T,Output = T>+Clone +Copy{
+impl <T> Display for Vector<T> where T:Add<T,Output=T>+Sub<T,Output = T>+Clone +Copy+Display{
+    fn fmt(&self, f: &mut Formatter) -> Result<(), Error> {
+        let size = self.value.len();
+        for i in 0..size{
+            write!(f,"{} ",self.value[i]);
+        }
+        Ok(())
+    }
+}
+
+impl <T> Display for Matrix<T> where T:Add<T,Output=T>+Sub<T,Output = T>+Clone +Copy+Display{
     fn fmt(&self, f: &mut Formatter) -> Result<(), Error> {
         let size = self.value.len();
         let mut format_str = String::new();
-        write!(f,"Matrix {} x {}\n",size,self.value[0].size())
-//        for i in 0..size{
-//
-//            write!()
-//
-//            format_str = format_str +"";
-//
-//        }
-        //write!(f,"{}")
+        write!(f,"Matrix {}x{}\n",size,self.value[0].size());
+        for i in 0..size{
+            let vec = &self.value[i];
+            write!(f,"{}\n",vec);
+        }
+        write!(f,"\n")
     }
 }
 
